@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sun
   - Moon
+  - ReflectiveSurface
   layers:
   - Default
   - TransparentFX
