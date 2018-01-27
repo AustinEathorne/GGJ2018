@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PullReflectItem : MonoBehaviour 
 {
-
 	private delegate void PlayerAction();
 
 	private void Update()
