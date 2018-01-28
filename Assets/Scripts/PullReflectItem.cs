@@ -17,11 +17,13 @@ public class PullReflectItem : MonoBehaviour
 
 	private void Pull()
 	{
+		// enable/disable pull child object
 		Debug.Log("Pull Action");
 	}
 
 	private void Reflect()
 	{
+		// enable/disable mirror child object
 		Debug.Log("Reflect Action");
 	}
 }
