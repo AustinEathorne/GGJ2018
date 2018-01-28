@@ -8,6 +8,11 @@ public class PlayerPickup : MonoBehaviour
     private WeaponManager weaponManagerScript;
     public GameObject weaponManager;
 
+    private Transform weaponToThrowTransform;
+
+    [SerializeField]
+    private float launchAngle = 45.0f;
+
     private void Awake()
     {
         hasWeapon = false;
@@ -75,7 +80,10 @@ public class PlayerPickup : MonoBehaviour
         hasWeapon = true;
         weapon.transform.position = weaponHoldPoint.transform.position;
         weapon.transform.parent = transform;
+
+		this.weaponToThrowTransform = weapon.transform;       
         weapon.GetComponent<CapsuleCollider>().isTrigger = false;
+		this.weaponToThrowTransform.GetComponent<Rigidbody>().useGravity = false;
     }
 
     // throw weapon
@@ -86,6 +94,28 @@ public class PlayerPickup : MonoBehaviour
             hasWeapon = false;          
             // rest of throw physics here
 
+            Vector3 launchPos = this.transform.localPosition;
+           	Vector3 targetPos = this.weaponManager.transform.parent.transform.tag == "Sun" ?
+				GameObject.FindGameObjectWithTag("Sun").transform.localPosition : 
+				GameObject.FindGameObjectWithTag("Moon").transform.localPosition;
+
+			targetPos.y = launchPos.y;
+
+			weaponToThrowTransform.LookAt(targetPos);
+
+			float distance = Vector3.Distance(launchPos, targetPos);
+			float initialVel = Mathf.Sqrt((distance * -Physics.gravity.y) / (Mathf.Sin(Mathf.Deg2Rad * this.launchAngle * 2)));
+
+			float yVel = initialVel * Mathf.Sin(Mathf.Deg2Rad * this.launchAngle);
+			float zVel = initialVel * Mathf.Cos(Mathf.Deg2Rad * this.launchAngle);
+
+			Vector3 yVelocity = yVel * weaponToThrowTransform.transform.up;
+			Vector3 zVelocity = zVel * weaponToThrowTransform.transform.forward;
+
+			Vector3 velocity = zVelocity + yVelocity;
+
+			this.weaponToThrowTransform.GetComponent<Rigidbody>().useGravity = true;
+			this.weaponToThrowTransform.GetComponent<Rigidbody>().velocity = velocity;
         }
     }
 }

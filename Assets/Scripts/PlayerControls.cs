@@ -17,6 +17,7 @@ public class PlayerControls : MonoBehaviour
     private float m_TurnInputYValue;
     private float m_LookAngleInDegrees;
 
+    private Transform heldWeapon;
 
     private void Awake()
     {
