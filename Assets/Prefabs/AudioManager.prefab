@@ -250,4 +250,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67eb41f5b6a17634d8e52306180f5050, type: 3}
   - {fileID: 8300000, guid: c57e9c4748d1cb34e9fd47649e7ae57b, type: 3}
   - {fileID: 8300000, guid: 29824fa46c3082b4a9f1c255e438eb68, type: 3}
-  pullClip: {fileID: 0}
+  pullClip: {fileID: 8300000, guid: afb4f46e48b2e634e8363c9017feff68, type: 3}
