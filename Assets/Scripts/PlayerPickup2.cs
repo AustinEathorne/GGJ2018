@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerPickup : MonoBehaviour
-{
-    public bool hasWeapon;
+public class PlayerPickup2 : MonoBehaviour {
+
+	public bool hasWeapon;
     public Transform weaponHoldPoint;
 
     private WeaponManager weaponManagerScript;
@@ -28,20 +29,21 @@ public class PlayerPickup : MonoBehaviour
 
     private void Update()
     {
-		if(Input.GetButtonDown("SwapWeapon1"))
+		if(Input.GetButtonDown("SwapWeapon2"))
         {
 			if(hasWeapon)
 			{
-				if (this.gameObject.tag == "Moon")
+				if (this.gameObject.tag == "Sun")
 	            {
-					Debug.Log("swap weapon 1");
-					weaponManagerScript.moonWantsToSwitch = !weaponManagerScript.moonWantsToSwitch;
+					Debug.Log("swap weapon 2");
+					weaponManagerScript.sunWantsToSwitch = !weaponManagerScript.sunWantsToSwitch;
 	            }
-	           	
+
+
 				if (weaponManagerScript.sunWantsToSwitch && weaponManagerScript.moonWantsToSwitch)
 		        {
 		            // transmit weapon call here
-		            Debug.Log("script 1");
+		            Debug.Log("script 2");
 		            TrasmitWeapon();
 
 		        }
@@ -66,8 +68,6 @@ public class PlayerPickup : MonoBehaviour
         weapon.transform.position = weaponHoldPoint.transform.position;
         weapon.transform.parent = transform;
 
-		this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
 		this.weaponToThrowTransform = weapon.transform;
         weapon.GetComponent<CapsuleCollider>().enabled = false;
 		this.weaponToThrowTransform.GetComponent<Rigidbody>().useGravity = false;
@@ -79,18 +79,18 @@ public class PlayerPickup : MonoBehaviour
     {
         if(hasWeapon && !isLaunching)
         {
-        	Debug.Log("call transmit 1");
+        	Debug.Log("call transmit 2");
         	this.isLaunching = true;
 
-			GameObject.FindGameObjectWithTag("Sun").GetComponent<PlayerPickup2>().TrasmitWeapon();
+			GameObject.FindGameObjectWithTag("Moon").GetComponent<PlayerPickup>().TrasmitWeapon();
 
             hasWeapon = false;          
             // rest of throw physics here
 
             Vector3 launchPos = this.transform.localPosition;
-           	Vector3 targetPos = GameObject.FindGameObjectWithTag("Sun").transform.localPosition;
+           	Vector3 targetPos = GameObject.FindGameObjectWithTag("Moon").transform.localPosition;
 
-			launchPos.y = this.transform.position.y + this.weaponToThrowTransform.lossyScale.y; // MAGIC NUMBERS YEAAAAAAAAAAAAAAAAAH
+           	launchPos.y = this.transform.position.y + this.weaponToThrowTransform.lossyScale.y + 1.0f;
 
 			targetPos.y = launchPos.y;
 
@@ -123,9 +123,9 @@ public class PlayerPickup : MonoBehaviour
 
 	public IEnumerator ResetWeapon()
 	{
-		yield return new WaitForSeconds(0.15f);
+		yield return new WaitForSeconds(0.25f);
 
-		weaponManagerScript.moonWantsToSwitch = false;
+		weaponManagerScript.sunWantsToSwitch = false;
 		this.weaponToThrowTransform.parent = null;
 		this.weaponToThrowTransform.GetComponent<CapsuleCollider>().enabled = true;
 
