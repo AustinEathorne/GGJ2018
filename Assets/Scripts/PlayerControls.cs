@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -22,7 +23,9 @@ public class PlayerControls : MonoBehaviour
     private string currentItem = string.Empty;
 
     [SerializeField]
-    private GameObject moonMirror;
+    public GameObject moonMirror;
+
+    private bool isUpdating = false;
 
     private void Awake()
     {
@@ -64,6 +67,16 @@ public class PlayerControls : MonoBehaviour
 		if(Input.GetButtonUp("UseItem2"))
 		{
 			this.ResetIsPulling();
+		}
+
+		if(this.moonMirror != null && this.moonMirror.activeSelf && this.gameObject.tag == "Moon")
+		{
+			if(!isUpdating)
+			{
+				this.isUpdating = true;
+				this.StartCoroutine(this.UpdateOnMirrorUp());
+			}
+
 		}
     }
 
@@ -130,11 +143,19 @@ public class PlayerControls : MonoBehaviour
     	if(currentItem == "Amulet")
     	{
 			this.GetComponent<PullObject>().SetIsPulling(false);
+			GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
     	}
     }
 
     public void setCurrentItem(string name)
     {
     	this.currentItem = name;
+    }
+
+    public IEnumerator UpdateOnMirrorUp()
+    {
+		GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
+   		yield return new WaitForSeconds(0.5f);
+		this.isUpdating = false;
     }
 }

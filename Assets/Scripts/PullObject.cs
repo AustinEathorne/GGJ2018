@@ -19,7 +19,6 @@ public class PullObject : MonoBehaviour
 		yield return null;
 	}
 
-
 	public IEnumerator PullObjectIn()
 	{
 		if(this.isrunningCoroutine)
@@ -67,6 +66,9 @@ public class PullObject : MonoBehaviour
 					closestDistance = distance;
 				}
 			}
+
+			Vector3 temp = this.transform.localPosition;
+			temp.y = pullableList[0].transform.position.y;
 
 			while(this.isPulling)
 			{

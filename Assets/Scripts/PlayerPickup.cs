@@ -86,6 +86,8 @@ public class PlayerPickup : MonoBehaviour
 
 			GameObject.FindGameObjectWithTag("Sun").GetComponent<PlayerPickup2>().TrasmitWeapon();
 
+			this.GetComponent<PlayerControls>().moonMirror.SetActive(false);
+
             hasWeapon = false;          
             // rest of throw physics here
 
