@@ -81,7 +81,7 @@ public class LightBeam : MonoBehaviour {
 		while(loopActive)
 		{
 			if(Physics.Raycast(lightLastPosition, lightDirection, out hit, this.lightDistance) &&
-				(hit.transform.gameObject.tag == bounceTag || hit.transform.gameObject.tag == splitTag))
+				(hit.transform.gameObject.tag == bounceTag || hit.transform.gameObject.tag == splitTag || hit.transform.tag == "moonMirror"))
 			{
 				Debug.Log("Bounce");
 				lightReflected++;

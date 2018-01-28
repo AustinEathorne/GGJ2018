@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23160250257330398}
   - component: {fileID: 114795616551163628}
   - component: {fileID: 54118593287317916}
-  - component: {fileID: 114004892669951750}
+  - component: {fileID: 114707313368428452}
   m_Layer: 0
   m_Name: MoonPlayer
   m_TagString: Moon
@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1100269170518028}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.6, y: 1.56, z: -6.5}
+  m_LocalPosition: {x: 1.18, y: 1.33, z: -6.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4662058076449478}
@@ -211,7 +211,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114004892669951750
+--- !u!114 &114707313368428452
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -222,7 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1862ec5a9034f7d46b5178abacfe764c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasWeapon: 0
   weaponHoldPoint: {fileID: 4874856665287090}
+  weaponManager: {fileID: 0}
+  launchAngle: 45
 --- !u!114 &114795616551163628
 MonoBehaviour:
   m_ObjectHideFlags: 1

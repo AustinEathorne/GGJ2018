@@ -72,6 +72,8 @@ public class PlayerPickup2 : MonoBehaviour {
         weapon.GetComponent<CapsuleCollider>().enabled = false;
 		this.weaponToThrowTransform.GetComponent<Rigidbody>().useGravity = false;
 		this.weaponToThrowTransform.GetComponent<Rigidbody>().isKinematic = true;
+
+		this.GetComponent<PlayerControls>().setCurrentItem(this.weaponToThrowTransform.GetComponent<Weapon>().GetWeaponName());
     }
 
     // throw weapon

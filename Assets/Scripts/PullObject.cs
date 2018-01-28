@@ -15,7 +15,7 @@ public class PullObject : MonoBehaviour
 
 	private IEnumerator Start()
 	{
-		this.StartCoroutine(this.PullObjectIn());
+		//this.StartCoroutine(this.PullObjectIn());
 		yield return null;
 	}
 
@@ -27,26 +27,37 @@ public class PullObject : MonoBehaviour
 
 		this.isrunningCoroutine = true;
 
-		GameObject[] pullableList = GameObject.FindGameObjectsWithTag("ReflectiveSurface");
-		List<Transform> pullableInfrontList = new List<Transform>();
+		GameObject[] pullableList = GameObject.FindGameObjectsWithTag("BounceSurface");
+		Debug.Log("length: " + pullableList.Length.ToString());
+		//List<Transform> pullableInfrontList = null;
 
 		//check if object is infront of you
-		for(int i = 0; i < pullableList.Length; i++)
+		/*
+		if(pullableList != null)
 		{
-			Vector3 distance = this.transform.localPosition - pullableList[i].transform.localPosition;
-			if(Vector3.Dot(distance, pullableList[i].transform.forward) > 0.0f)
+			for(int i = 0; i < pullableList.Length; i++)
 			{
-				pullableInfrontList.Add(pullableList[i].transform);
+				Vector3 distance = this.transform.localPosition - pullableList[i].transform.localPosition;
+				if(Vector3.Dot(distance, pullableList[i].transform.forward) < 0.0f)
+				{
+					Debug.Log("Add");
+					if(pullableInfrontList == null)
+					{
+						pullableInfrontList = new List<Transform>();
+					}
+
+					pullableInfrontList.Add(pullableList[i].transform);
+				}
 			}
 		}
-
-		if(pullableInfrontList != null)
+		*/
+		if(pullableList != null)
 		{
 			int closestIndex = 0;
-			float closestDistance = Vector3.Distance(this.transform.localPosition, pullableInfrontList[0].localPosition);
+			float closestDistance = Vector3.Distance(this.transform.localPosition, pullableList[0].transform.localPosition);
 
 			// find the closest
-			for(int i  = 0; i < pullableInfrontList.Count; i++)
+			for(int i  = 0; i < pullableList.Length; i++)
 			{
 				float distance = Vector3.Distance(this.transform.localPosition, pullableList[i].transform.localPosition);
 
@@ -59,12 +70,21 @@ public class PullObject : MonoBehaviour
 
 			while(this.isPulling)
 			{
-				pullableInfrontList[closestIndex].transform.position = Vector3.MoveTowards(pullableInfrontList[closestIndex].transform.position, this.transform.localPosition, this.pullSpeed * Time.deltaTime);
+				Debug.Log("is pulling");
 
-				yield return null;	
+				pullableList[closestIndex].transform.position = Vector3.Lerp(pullableList[closestIndex].transform.position, this.transform.localPosition, this.pullSpeed * Time.deltaTime);
+
+				if(Vector3.Distance(pullableList[closestIndex].transform.position, this.transform.localPosition) <= 1.25f)
+				{
+					this.isPulling = false;
+				}
+
+				yield return null;
 			}
 		}
-		this.StartCoroutine(this.PullObjectIn());
+
+		this.isrunningCoroutine = false;
+		//this.StartCoroutine(this.PullObjectIn());
 	}
 
 	public void SetIsPulling(bool value)
@@ -72,6 +92,9 @@ public class PullObject : MonoBehaviour
 		this.isPulling = value;
 	}
 
-
+	public bool GetIsPulling()
+	{
+		return this.isPulling;
+	}
 
 }
