@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -17,6 +18,14 @@ public class PlayerControls : MonoBehaviour
     private float m_TurnInputYValue;
     private float m_LookAngleInDegrees;
 
+    private Transform heldWeapon;
+
+    private string currentItem = string.Empty;
+
+    [SerializeField]
+    public GameObject moonMirror;
+
+    private bool isUpdating = false;
 
     private void Awake()
     {
@@ -46,6 +55,29 @@ public class PlayerControls : MonoBehaviour
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputXValue = Input.GetAxis(m_TurnAxisHorizontalName);
         m_TurnInputYValue = Input.GetAxis(m_TurnAxisVerticalName);
+
+		if(Input.GetButtonDown("UseItem1"))
+        {
+        	this.UseItemMoon();
+        }
+		if(Input.GetButtonDown("UseItem2"))
+		{
+			this.UseItemSun();
+		}
+		if(Input.GetButtonUp("UseItem2"))
+		{
+			this.ResetIsPulling();
+		}
+
+		if(this.moonMirror != null && this.moonMirror.activeSelf && this.gameObject.tag == "Moon")
+		{
+			if(!isUpdating)
+			{
+				this.isUpdating = true;
+				this.StartCoroutine(this.UpdateOnMirrorUp());
+			}
+
+		}
     }
 
     private void FixedUpdate()
@@ -65,5 +97,65 @@ public class PlayerControls : MonoBehaviour
             Quaternion eulerAngle = Quaternion.Euler(0.0f, m_LookAngleInDegrees, 0.0f);
             m_Rigidbody.rotation = Quaternion.Lerp(m_Rigidbody.rotation, eulerAngle, Time.deltaTime * m_damping);
         }
+    }
+
+    private void UseItemMoon()
+    {
+		if(this.gameObject.tag != "Moon")
+    		return;
+
+    	if(currentItem == "Amulet")
+    	{
+    		this.moonMirror.SetActive(!this.moonMirror.activeSelf);
+			GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
+    		Debug.Log("Amulet Moon");
+    	}
+    	else if (currentItem == "Staff")
+    	{
+			this.moonMirror.SetActive(false);
+			Debug.Log("Staff Moon");
+    	}
+    }
+
+	private void UseItemSun()
+    {
+    	if(this.gameObject.tag != "Sun")
+    		return;
+
+    	if(currentItem == "Amulet")
+    	{
+    		Debug.Log("Amulet Sun");
+
+			this.GetComponent<PullObject>().SetIsPulling(!this.GetComponent<PullObject>().GetIsPulling());
+			this.GetComponent<PullObject>().StartCoroutine(this.GetComponent<PullObject>().PullObjectIn());
+    	}
+    	else if (currentItem == "Staff")
+    	{
+			Debug.Log("Staff Sun");
+    	}
+    }
+
+    private void ResetIsPulling()
+    {
+		if(this.gameObject.tag != "Sun")
+    		return;
+
+    	if(currentItem == "Amulet")
+    	{
+			this.GetComponent<PullObject>().SetIsPulling(false);
+			GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
+    	}
+    }
+
+    public void setCurrentItem(string name)
+    {
+    	this.currentItem = name;
+    }
+
+    public IEnumerator UpdateOnMirrorUp()
+    {
+		GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
+   		yield return new WaitForSeconds(0.5f);
+		this.isUpdating = false;
     }
 }

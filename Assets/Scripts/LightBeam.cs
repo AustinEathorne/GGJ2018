@@ -38,14 +38,7 @@ public class LightBeam : MonoBehaviour {
 	private float timer = 0;
 
 	private bool loopActive = false;
-
-	public void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			this.StartCoroutine(this.DrawLightBeam());
-		}
-	}
+	private bool isDrawing = false;
 
 	private IEnumerator Start()
 	{
@@ -53,16 +46,28 @@ public class LightBeam : MonoBehaviour {
 		yield return null;
 	}
 
-	public void ResetLine()
+	private void Update()
 	{
-		this.lineRenderer.SetVertexCount(1);
-		this.lineRenderer.SetPosition(0, this.transform.position);
-	}
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			this.StartCoroutine(this.DrawLightBeam());
+		}
+	}	
 
 	public IEnumerator DrawLightBeam()
 	{
+		yield return new WaitForEndOfFrame();
+
+		if(this.isDrawing)
+			yield break;
+
+		Debug.Log("Draw called");
+		this.isDrawing = true;
+
 		if(this.loopActive)
 			yield break;
+
+		Debug.Log("looping");
 
 		int lightSplit = 1;
 		int lightReflected = 1;
@@ -81,7 +86,7 @@ public class LightBeam : MonoBehaviour {
 		while(loopActive)
 		{
 			if(Physics.Raycast(lightLastPosition, lightDirection, out hit, this.lightDistance) &&
-				(hit.transform.gameObject.tag == bounceTag || hit.transform.gameObject.tag == splitTag))
+				(hit.transform.gameObject.tag == bounceTag || hit.transform.gameObject.tag == splitTag || hit.transform.tag == "moonMirror"))
 			{
 				Debug.Log("Bounce");
 				lightReflected++;
@@ -129,6 +134,7 @@ public class LightBeam : MonoBehaviour {
 				loopActive = false;
 			}
 
+			this.isDrawing = false;
 			yield return new WaitForEndOfFrame();
 		}
 	}
