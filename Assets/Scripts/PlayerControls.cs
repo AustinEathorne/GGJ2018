@@ -8,7 +8,6 @@ public class PlayerControls : MonoBehaviour
     public float m_TurnSpeed = 180f;
     public float m_damping = 10.0f;
 
-
     private string m_MovementAxisName;
     private string m_TurnAxisHorizontalName;
     private string m_TurnAxisVerticalName;
