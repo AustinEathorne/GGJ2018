@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sun
   - Moon
+  - Weapon
   layers:
   - Default
   - TransparentFX
