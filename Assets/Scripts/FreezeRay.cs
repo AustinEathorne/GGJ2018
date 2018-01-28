@@ -19,7 +19,7 @@ public class FreezeRay : MonoBehaviour {
 
     public void UseFreeze()
     {
-        RayCastCheck(transform.forward);
+        RayCastCheck(-transform.forward);
     }
 
     private void RayCastCheck(Vector3 rayDirection)

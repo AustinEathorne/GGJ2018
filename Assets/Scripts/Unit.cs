@@ -32,7 +32,7 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private GameObject m_changeMattObj;
 
-    private float m_freezeCoolDown = 3f;
+    private float m_freezeCoolDown = 5f;
 
     // Update is called once per frame
     void Update()
@@ -42,9 +42,9 @@ public class Unit : MonoBehaviour
 
         if (!m_isDead)
         {
-            if (m_isNorm && m_childRefObj.GetComponent<CheckForPlayer>().m_bPlayerInRange)
+            if (m_isNorm && m_childRefObj.GetComponent<CheckForPlayer>().m_bPlayerInRange == true)
             {
-                m_freezeCoolDown = 3f;
+                m_freezeCoolDown = 5f;
                 m_changeMattObj.GetComponent<Renderer>().material.color = m_mattNorm.color;
                 StartCoroutine(UpdatePath());
                 m_isNorm = false;

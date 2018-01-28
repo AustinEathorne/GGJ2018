@@ -14,7 +14,7 @@ public class Smash : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            UseSmash(transform.forward);
+            UseSmash(-transform.forward);
             Debug.Log("SMASH!!!!!");
         }
     }
