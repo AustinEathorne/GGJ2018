@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44429612, g: 0.4876024, b: 0.5400029, a: 1}
+  m_IndirectSpecularColor: {r: 0.4442963, g: 0.48760235, b: 0.5400032, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -9705,6 +9705,11 @@ Prefab:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114127431889794116, guid: fd8788877d36e6d44bc44a4f6757e157,
+        type: 2}
+      propertyPath: weaponManager
+      value: 
+      objectReference: {fileID: 1447393460}
+    - target: {fileID: 114252313806065790, guid: fd8788877d36e6d44bc44a4f6757e157,
         type: 2}
       propertyPath: weaponManager
       value: 
@@ -20967,6 +20972,11 @@ Prefab:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114004892669951750, guid: 0d01ad044477f6b4fb8d71bb002ce4b0,
+        type: 2}
+      propertyPath: weaponManager
+      value: 
+      objectReference: {fileID: 1447393460}
+    - target: {fileID: 114707313368428452, guid: 0d01ad044477f6b4fb8d71bb002ce4b0,
         type: 2}
       propertyPath: weaponManager
       value: 
