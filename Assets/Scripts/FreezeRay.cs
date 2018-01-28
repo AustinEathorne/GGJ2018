@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FreezeRay : MonoBehaviour {
 
+
     private GameObject m_hitEnemy = null;
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class FreezeRay : MonoBehaviour {
             if (hit.transform.tag == "enemy")
             {
                 Debug.Log("hit!!");
-                hit.transform.gameObject.GetComponent<TestAI>().m_isFrozen = true;
+                hit.transform.gameObject.GetComponent<Unit>().m_isFrozen = true;
             }
         }
 
