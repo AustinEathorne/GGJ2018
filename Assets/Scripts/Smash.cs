@@ -27,10 +27,14 @@ public class Smash : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit, 10f))
         {
-            if (hit.transform.tag == "enemy" && hit.transform.gameObject.GetComponent<TestAI>().m_isFrozen)
+            if(hit.transform.tag == "enemy")
+            {
+                Debug.Log("hit");
+            }
+            if (hit.transform.tag == "enemy" && hit.transform.gameObject.GetComponent<Unit>().m_isFrozen)
             {
                 Debug.Log("Smashed!");
-                hit.transform.gameObject.GetComponent<TestAI>().m_isDead = true;
+                hit.transform.gameObject.GetComponent<Unit>().m_isDead = true;
             }
         }
 

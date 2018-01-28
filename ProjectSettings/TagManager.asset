@@ -10,6 +10,7 @@ TagManager:
   - Weapon
   - SpawnedBeam
   - BounceSurface
+  - enemy
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Walkable
+  - Unwalkable
   - 
   - 
   - 
