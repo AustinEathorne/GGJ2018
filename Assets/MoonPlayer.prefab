@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114004892669951750}
   m_Layer: 0
   m_Name: MoonPlayer
-  m_TagString: Player
+  m_TagString: Moon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3d09a6026b39240a700d0e0595c698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerNumber: 2
+  m_PlayerNumber: 1
   m_Speed: 6
   m_TurnSpeed: 180
   m_damping: 10
