@@ -21,104 +21,115 @@ public class LightBeam : MonoBehaviour {
 	private bool hasHitPoint = false;
 
 
+	[SerializeField]
+	private float updateFreq = 0.1f;
+	[SerializeField]
+	private float lightDistance = 25.0f;
+	[SerializeField]
+	private string bounceTag = "bounce";
+	[SerializeField]
+	private string splitTag = "split";
+	[SerializeField]
+	private string spawnedBeamTag = "spawned beam";
+	[SerializeField]
+	private int maxBounce = 5;
+	[SerializeField]
+	private int maxSplit = 5;
+	private float timer = 0;
+
+	private bool loopActive = false;
+
+	public void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			this.StartCoroutine(this.DrawLightBeam());
+		}
+	}
+
 	private IEnumerator Start()
 	{
-		this.StartCoroutine(this.RunBeam());
+		this.StartCoroutine(this.DrawLightBeam());
 		yield return null;
 	}
 
-	private IEnumerator RunBeam()
+	public void ResetLine()
 	{
-		Debug.Log("Run Beam Routine");
-
-		yield return this.StartCoroutine(this.CastRay());
-		yield return this.StartCoroutine(this.MoveLightBeam());
-		yield return this.StartCoroutine(this.CalculateNextBeam());
-
-		this.hasHitPoint = false;
-		this.StartCoroutine(this.RunBeam());
+		this.lineRenderer.SetVertexCount(1);
+		this.lineRenderer.SetPosition(0, this.transform.position);
 	}
 
-	private IEnumerator CastRay()
+	public IEnumerator DrawLightBeam()
 	{
-		Ray ray = new Ray(this.transform.position, this.transform.forward);
+		if(this.loopActive)
+			yield break;
+
+		int lightSplit = 1;
+		int lightReflected = 1;
+		int vertexCount = 1;
+
+		loopActive = true;
+
+		Vector3 lightDirection = this.transform.forward;
+		Vector3 lightLastPosition = this.transform.localPosition;
+
+		this.lineRenderer.SetVertexCount(1);
+		this.lineRenderer.SetPosition(0, this.transform.position);
+
 		RaycastHit hit;
 
-		Debug.Log("Out");
-
-		while(!hasHitPoint)
+		while(loopActive)
 		{
-			Debug.Log("In");
-			Debug.DrawRay(this.transform.position, this.transform.forward, Color.green, 100.0f);
-			if(Physics.Raycast(ray, out hit, 100.0f))
+			if(Physics.Raycast(lightLastPosition, lightDirection, out hit, this.lightDistance) &&
+				(hit.transform.gameObject.tag == bounceTag || hit.transform.gameObject.tag == splitTag))
 			{
-				Debug.Log("Waiting");
+				Debug.Log("Bounce");
+				lightReflected++;
+				vertexCount += 3;
+				lineRenderer.SetVertexCount(vertexCount);
+				lineRenderer.SetPosition(vertexCount - 3, Vector3.MoveTowards(hit.point, lightLastPosition, 0.01f));
+				lineRenderer.SetPosition(vertexCount - 2, hit.point);
+				lineRenderer.SetPosition(vertexCount - 1, hit.point);
+				lineRenderer.SetWidth(0.1f, 0.1f);
 
-				if(hit.transform.tag == "ReflectiveSurface")
+				lightLastPosition = hit.point;
+				Vector3 prevDirection = lightDirection;
+				lightDirection = Vector3.Reflect(lightDirection, hit.normal);
+
+				if(hit.transform.tag == splitTag)
 				{
-					Debug.Log("Hit Mirror at: " + hit.point);
-					this.hasHitPoint = true;
+					if(lightSplit >= maxSplit)
+					{
 
-					this.AddPositionToLine();
-
-					nextPos = hit.point;
-					this.nextNormal = hit.transform.forward;
+					}
+					else
+					{
+						lightSplit++;
+						GameObject clone = Instantiate(gameObject, hit.point, Quaternion.LookRotation(prevDirection));
+						clone.name = spawnedBeamTag;
+						((GameObject)clone).tag = spawnedBeamTag;
+					}
 				}
 			}
+			else
+			{
+				lightReflected++;
+				vertexCount++;
+				lineRenderer.SetVertexCount(vertexCount);
 
-			yield return null;
+				Vector3 lastPos = lightLastPosition + (lightDirection * lightDistance);
+
+				lineRenderer.SetPosition(vertexCount - 1, lightLastPosition + (lightDirection * lightDistance));
+
+				loopActive = false;
+			}
+
+			if(lightReflected > maxBounce)
+			{
+				loopActive = false;
+			}
+
+			yield return new WaitForEndOfFrame();
 		}
 	}
-
-	private IEnumerator MoveLightBeam()
-	{
-		Debug.Log("Move Beam");
-
-		this.lineRenderer.SetPosition(startIndex, this.transform.position);
-		this.lineRenderer.SetPosition(startIndex + 1, this.transform.position);
-
-		float distance = Vector3.Distance(this.transform.position, nextPos);
-		float linelength = 0.0f;
-
-		while(distance > 0.05f)
-		{
-			Debug.Log("Moving");
-
-			this.lineRenderer.SetPosition(startIndex + 1, Vector3.MoveTowards(this.lineRenderer.GetPosition(startIndex + 1), this.nextPos, this.lightSpeed * Time.deltaTime));
-			distance = Vector3.Distance(this.lineRenderer.GetPosition(startIndex + 1), this.nextPos);
-
-			yield return null;
-		}
-		yield return null;
-	}
-
-	private IEnumerator CalculateNextBeam()
-	{
-		Debug.Log("Calculate Next Beam");
-
-		Vector3 dir = (this.lineRenderer.GetPosition(startIndex + 1) - this.lineRenderer.GetPosition(startIndex)).normalized;
-		Vector3 reflection = Vector3.Reflect(dir, this.nextNormal);
-
-		this.transform.rotation = Quaternion.LookRotation(reflection);
-		this.transform.position = this.nextPos;
-
-		yield return null;
-	}
-
-	private void AddPositionToLine()
-	{
-		Vector3[] tempArray = new Vector3[this.lineRenderer.positionCount + 1];
-		this.lineRenderer.GetPositions(tempArray);
-
-		this.lineRenderer.SetPosition(startIndex, this.lineRenderer.GetPosition(this.lineRenderer.positionCount - 1));
-		this.lineRenderer.positionCount += 1;
-
-		for(int i = 0; i < this.lineRenderer.positionCount; i++)
-		{
-			this.lineRenderer.SetPosition(i, tempArray[i]);
-		}
-
-		this.startIndex += 1;
-	}
-
 }
