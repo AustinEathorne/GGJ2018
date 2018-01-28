@@ -503,6 +503,21 @@ Prefab:
       propertyPath: lightDistance
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 120498803432179998, guid: 1ebe90bc144997f4096571e4b3b75e05,
+        type: 2}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 120498803432179998, guid: 1ebe90bc144997f4096571e4b3b75e05,
+        type: 2}
+      propertyPath: m_Parameters.numCornerVertices
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 120498803432179998, guid: 1ebe90bc144997f4096571e4b3b75e05,
+        type: 2}
+      propertyPath: m_Parameters.numCapVertices
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ebe90bc144997f4096571e4b3b75e05, type: 2}
   m_IsPrefabParent: 0

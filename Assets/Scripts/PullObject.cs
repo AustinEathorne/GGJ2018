@@ -74,7 +74,7 @@ public class PullObject : MonoBehaviour
 			{
 				Debug.Log("is pulling");
 
-				pullableList[closestIndex].transform.position = Vector3.Lerp(pullableList[closestIndex].transform.position, this.transform.localPosition, this.pullSpeed * Time.deltaTime);
+				pullableList[closestIndex].transform.position = Vector3.Lerp(pullableList[closestIndex].transform.position, temp, this.pullSpeed * Time.deltaTime);
 
 				if(Vector3.Distance(pullableList[closestIndex].transform.position, this.transform.localPosition) <= 1.25f)
 				{
