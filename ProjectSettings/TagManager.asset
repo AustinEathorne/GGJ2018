@@ -6,7 +6,10 @@ TagManager:
   tags:
   - Sun
   - Moon
+  - ReflectiveSurface
   - Weapon
+  - SpawnedBeam
+  - BounceSurface
   layers:
   - Default
   - TransparentFX
