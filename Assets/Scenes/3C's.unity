@@ -166,6 +166,48 @@ Transform:
   m_PrefabParentObject: {fileID: 4197401329707194, guid: 0d01ad044477f6b4fb8d71bb002ce4b0,
     type: 2}
   m_PrefabInternal: {fileID: 2054562862}
+--- !u!1 &438664372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 438664373}
+  - component: {fileID: 438664374}
+  m_Layer: 0
+  m_Name: WeaponManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &438664373
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438664372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &438664374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438664372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8aead2aeed2bde48aa195a8bcde57d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moonWantsToSwitch: 0
+  sunWantsToSwitch: 0
 --- !u!1 &756037597
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,8 +497,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4030296963423902, guid: fd8788877d36e6d44bc44a4f6757e157, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114127431889794116, guid: fd8788877d36e6d44bc44a4f6757e157,
+        type: 2}
+      propertyPath: weaponManager
+      value: 
+      objectReference: {fileID: 438664372}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd8788877d36e6d44bc44a4f6757e157, type: 2}
   m_IsPrefabParent: 0
@@ -473,7 +520,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4197401329707194, guid: 0d01ad044477f6b4fb8d71bb002ce4b0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.56
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 4197401329707194, guid: 0d01ad044477f6b4fb8d71bb002ce4b0, type: 2}
       propertyPath: m_LocalPosition.z
@@ -497,8 +544,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4197401329707194, guid: 0d01ad044477f6b4fb8d71bb002ce4b0, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114004892669951750, guid: 0d01ad044477f6b4fb8d71bb002ce4b0,
+        type: 2}
+      propertyPath: weaponManager
+      value: 
+      objectReference: {fileID: 438664372}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d01ad044477f6b4fb8d71bb002ce4b0, type: 2}
   m_IsPrefabParent: 0
