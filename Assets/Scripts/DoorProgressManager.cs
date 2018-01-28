@@ -16,6 +16,8 @@ public class DoorProgressManager : MonoBehaviour
     public GameObject door4;
     public GameObject door5;
 
+    public GameObject staff;
+
     // Use this for initialization
     void Start ()
     {
