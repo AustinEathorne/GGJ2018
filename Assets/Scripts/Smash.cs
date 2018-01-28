@@ -19,7 +19,7 @@ public class Smash : MonoBehaviour {
         }
     }
 
-    private void UseSmash(Vector3 rayDirection)
+    public void UseSmash(Vector3 rayDirection)
     {
         Ray ray = new Ray(transform.position, rayDirection);
 

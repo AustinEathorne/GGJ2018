@@ -17,7 +17,7 @@ public class FreezeRay : MonoBehaviour {
         }
     }
 
-    private void UseFreeze()
+    public void UseFreeze()
     {
         RayCastCheck(transform.forward);
     }

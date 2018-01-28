@@ -117,6 +117,7 @@ public class PlayerControls : MonoBehaviour
     	{
 			this.moonMirror.SetActive(false);
 			this.audioManager.PlayFreeze();
+			this.GetComponent<FreezeRay>().UseFreeze();
 			Debug.Log("Staff Moon");
     	}
     }
@@ -139,6 +140,7 @@ public class PlayerControls : MonoBehaviour
     	{
 			Debug.Log("Staff Sun");
 			this.audioManager.PlaySmash();
+			this.GetComponent<Smash>().UseSmash(this.transform.forward);
     	}
     }
 
