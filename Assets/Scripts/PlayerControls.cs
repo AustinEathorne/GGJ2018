@@ -24,6 +24,9 @@ public class PlayerControls : MonoBehaviour
     [SerializeField]
     public GameObject moonMirror;
 
+    [SerializeField]
+    private AudioManager audioManager;
+
     private bool isUpdating = false;
 
     private void Awake()
@@ -107,11 +110,13 @@ public class PlayerControls : MonoBehaviour
     	{
     		this.moonMirror.SetActive(!this.moonMirror.activeSelf);
 			GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().StartCoroutine(GameObject.FindGameObjectWithTag("SpawnedBeam").GetComponent<LightBeam>().DrawLightBeam());
+
     		Debug.Log("Amulet Moon");
     	}
     	else if (currentItem == "Staff")
     	{
 			this.moonMirror.SetActive(false);
+			this.audioManager.PlayFreeze();
 			Debug.Log("Staff Moon");
     	}
     }
@@ -127,10 +132,13 @@ public class PlayerControls : MonoBehaviour
 
 			this.GetComponent<PullObject>().SetIsPulling(!this.GetComponent<PullObject>().GetIsPulling());
 			this.GetComponent<PullObject>().StartCoroutine(this.GetComponent<PullObject>().PullObjectIn());
+
+			this.audioManager.PlayPull();
     	}
     	else if (currentItem == "Staff")
     	{
 			Debug.Log("Staff Sun");
+			this.audioManager.PlaySmash();
     	}
     }
 
